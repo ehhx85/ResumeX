@@ -1,0 +1,74 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-contact}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+\RequirePackage{resumex-variables}%
+% ============================================================================ %
+\newcommand{\@GetPhoneNumber}{%
+    (\@GetSubString{\@PhoneNumber}{1}{3})\ %
+    \@GetSubString{\@PhoneNumber}{4}{6}\,\--\,%
+    \@GetSubString{\@PhoneNumber}{7}{10}%
+}%
+% ============================================================================ %
+\newcommand{\@GetLink@EmailAddress}{%
+    \href{mailto:\@EmailAddress}{\@EmailAddress}%
+}%
+% ============================================================================ %
+\newcommand{\@GetLink@LinkedIn}{%
+    \href{https://\@LinkedInLink}{\@LinkedInUserName}%
+}%
+% ============================================================================ %
+\newcommand{\@GetLink@GitHub}{%
+    \href{https://\@GitHubLink}{\@GitHubUserName}%
+}%
+% ============================================================================ %
+\newcommand{\@GetLocale}{%
+    \@AddressCity , \@AddressState%
+    \def\@tmpString{\ \textit{(willing to relocate)}}%
+    \IfStrEqCase{\@AddressRelocation}{%
+        {yes}{\@tmpString}%
+        {Yes}{\@tmpString}%        
+        {y}{\@tmpString}%
+        {Y}{\@tmpString}%
+    }[]%
+}%
+% ============================================================================ %
+\newcommand{\@BuildAddressSuite}{%
+    \if\relax\@AddressNumber\relax{% 
+        \@default@AddressSuiteType\@default@AddressSuiteNumber%
+    }%
+    \else{%
+        \if\relax\@AddressSuiteNumber\relax% 
+        \else{%
+            ,\ \@AddressSuiteType\ \@AddressSuiteNumber%
+        }\fi%            
+    }\fi%
+}%
+% ============================================================================ %
+\newcommand{\@BuildAddressLineOne}{%
+    \@AddressNumber\ %
+    \@AddressStreet%
+    \@BuildAddressSuite%
+}%
+% ============================================================================ %
+\newcommand{\@BuildAddressLineTwo}{%
+    \@AddressCity , %
+    \@AddressState\ %
+    \@AddressZipCode%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\@BuildAddress}{ O{} }{%
+    \@BuildAddressLineOne
+    \IfStrEqCase{#1}{%
+        {inline}{,\ }%
+        }[\\]%
+    \@BuildAddressLineTwo%
+}%
+% ============================================================================ %

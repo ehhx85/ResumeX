@@ -1,0 +1,60 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-base}[%
+    2018/05/29 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+% ============================================================================ %
+\RequirePackage{resumex-layout}%
+\RequirePackage{resumex-tools}%
+\RequirePackage{resumex-variables}%
+% ============================================================================ %
+\newcommand{\@BuildItemDate}[2]{% date used for all resume blocks
+    \def\@TMP{Present}%
+    \ifx #2\empty{%
+        \@TMP%
+    }%
+    \else{%
+        \ifx #1\empty{%
+            \@TMP%
+        }%
+        \else{%
+            \StrLeft{\DTMenglishmonthname{#1}}{3}\ #2% shorten month name
+        }\fi%
+    }\fi%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@BuildItemSemester}[2]{%
+    \def\@tmpSpring{Spring}%
+    \def\@tmpSummer{Summer}%
+    \def\@tmpFall{Fall}%
+    \IfStrEqCase{#1}{%
+        {1}{\@tmpSpring}%
+        {spr}{\@tmpSpring}
+        {spring}{\@tmpSpring}
+        {Spring}{\@tmpSpring}
+        {2}{\@tmpSummer}%
+        {sum}{\@tmpSummer}%
+        {summer}{\@tmpSummer}%
+        {Summer}{\@tmpSummer}%
+        {3}{\@tmpFall}%
+        {fall}{\@tmpFall}%
+        {Fall}{\@tmpFall}%
+    }[]%
+    \ #2%
+}%
+% ============================================================================ %
+\newcommand{\ReferenceName}[1]{\textbf{\large #1}}%
+% ============================================================================ %
+\newcommand{\ReferenceType}[1]{(\textit{former #1})}%
+% ============================================================================ %
+\newcommand{\LinkLinkedIn}[1]{\href{#1}{\color{blue} View on LinkedIn}}%
+% ============================================================================ %
+\newcommand{\LinkEmail}[1]{\href{mailto:#1}{\color{blue} #1}}%
+% ============================================================================ %

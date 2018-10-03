@@ -1,0 +1,173 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-heading}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-base}%
+\RequirePackage{resumex-name}%
+% ============================================================================ %
+\newcommand{\@HeaderFooterFormat}[1]{%
+    {\color{footer_color}\footnotesize%
+        #1%
+    }%
+}%
+% ============================================================================ %
+%%% Header Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\NewDocumentCommand{\@HeaderPortrait}{ O{portrait} }{%
+    \def\@tmpPath{graphics/#1}%
+    \begin{minipage}[c]{\dimexpr(\@PortraitSize)*3/2\relax}%
+        \begin{center}%
+        % -------------------------------------------------------------------- %
+            \tikzset{%
+                portrait/.style = {%
+                    path picture = {%
+                        \node[xshift = 0.05 cm, yshift = -0.15 cm]%
+                            at (path picture bounding box.center) {%
+                                \includegraphics[height = 1.25in]{\@tmpPath}%
+            };}}}%
+            % ---------------------------------------------------------------- %
+            \tikzfading[name = portrait fade, inner color = transparent!50, outer color = transparent!90]%
+            % ---------------------------------------------------------------- %
+            \pgfmathfromdim{\portraitRadius}{\@PortraitSize/2}%
+            \pgfmathsetmacro{\thicknessTrim}{0.025}%
+            \pgfmathsetmacro{\radiusInner}{\portraitRadius + \thicknessTrim}%
+            \pgfmathsetmacro{\radiusMid}{\radiusInner + 0.05}%
+            \pgfmathsetmacro{\radiusOuter}{\radiusMid + \thicknessTrim}%
+            % ---------------------------------------------------------------- %
+            \begin{tikzpicture}[scale = 1.00]%
+                \coordinate (CENTER) at (0,0);%
+                \shadedraw[ball color = black!20!white, draw opacity = 0] (CENTER) circle (\radiusOuter);%
+                \shadedraw[ball color = black!0!white, draw opacity = 0] (CENTER) circle (\radiusMid);%
+                \shadedraw[ball color = black!10!white, draw opacity = 0] (CENTER) circle (\radiusInner);%
+                \draw[portrait, draw opacity = 0] (CENTER) circle (\portraitRadius);%
+            \end{tikzpicture}%
+        % -------------------------------------------------------------------- %
+        \end{center}%
+    \end{minipage}%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\@InsertHeaderIcon}{ O{default} }{%
+    \def\@tmpPath{graphics/#1}%
+    \raisebox{-0.35ex}{%
+        \includegraphics[height = 2.15ex]{\@tmpPath}%
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@HeaderNameLine}{%
+    \@LoadFile{info}{contact}%
+    \textbf{\@FontSize@HeadingName{\@BuildName[first-mi-last-suffix]}}
+}%
+% ============================================================================ %
+\NewDocumentCommand{\@HeaderPositionLine}{ O{} }{%
+    \@LoadFile{experience}{#1}%
+    \@FontSize@HeadingPosition{%
+        \@JobTitle\ at \@CompanyName\@GetCompanyDepartment[,] %
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@HeaderContactLine}{%
+    \@LoadFile{info}{contact}%
+    \@FontSize@HeadingContact{%
+        \@InsertHeaderIcon[mobile]\@HeadingIconSpacing\@GetPhoneNumber%
+        \@HeadingItemSpacing |\@HeadingItemSpacing%
+        \@InsertHeaderIcon[map]\@HeadingIconSpacing\@GetLocale%
+        \\%
+        \@InsertHeaderIcon[email]\@HeadingIconSpacing\@GetLink@EmailAddress%
+        \@HeadingItemSpacing | \@HeadingItemSpacing%
+        \@InsertHeaderIcon[linkedin]\@HeadingIconSpacing\@GetLink@LinkedIn%
+        \@HeadingItemSpacing | \@HeadingItemSpacing%
+        \@InsertHeaderIcon[github]\@HeadingIconSpacing\@GetLink@GitHub%
+    }%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\@HeaderInfoBlock}{ O{} }{%
+    \begin{minipage}[c]{0.75\textwidth}%
+        \begin{flushleft}%
+            \renewcommand{\baselinestretch}{1.30}%
+            \@HeaderNameLine\\%
+            \@HeaderPositionLine[#1]\\%
+            \@HeaderContactLine%
+            \renewcommand{\baselinestretch}{\@baselinestretch@default}%
+        \end{flushleft}%
+    \end{minipage}%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateHeader}{ O{} o }{%
+    \thispagestyle{firstpagestyle}%
+    \noindent%
+    \begin{minipage}[c]{\textwidth}%
+        \vspace*{-\headheight}%
+        \vspace*{-\headsep}%
+        \begin{flushleft}%
+            \@HeaderPortrait[#2]%
+            \@HeaderInfoBlock[#1]%
+            \hspace*{\fill}%
+        \end{flushleft}%
+    \end{minipage}%
+    \par%
+    \vspace{\@HeadingTailSpacing}%
+    \vspace*{-1.0ex}%
+}%
+% ============================================================================ %
+\newcommand{\@LeftHeader}{%
+    \@LoadFile{info}{contact}%
+    \@HeaderFooterFormat{%
+        \textit{\@BuildName[fi-mi-last]}%
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@RightHeader}{%
+    \@LoadFile{info}{contact}%
+    \@HeaderFooterFormat{%
+        \textit{\@EmailAddress}%
+    }%
+}%
+% ============================================================================ %
+%%% Footer Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@LeftFooter}{%
+    \DTMsetstyle{default}%
+    \DTMsetup{datesep={.}}%
+    \@HeaderFooterFormat{%
+        Rev. [\DTMtoday]%
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@RightFooter}{%
+    \@LoadFile{info}{contact}%
+    \@HeaderFooterFormat{%
+        \textit{p.\thepage}%
+    }%
+}%
+% ============================================================================ %
+%%% Header / Footer Styles %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+% Default style
+    \fancyhf{}%
+    % ------------------------------------------------------------------------ %
+    \fancyhead[L]{\@LeftHeader}%
+    \fancyhead[R]{\@RightHeader}%
+    % ------------------------------------------------------------------------ %
+    \fancyfoot[L]{\@LeftFooter}%
+    \fancyfoot[R]{\@RightFooter}%
+    % ------------------------------------------------------------------------ %
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+% ============================================================================ %
+\fancypagestyle{firstpagestyle}{% Resume first page style
+    \fancyhead{}%
+}%
+% ============================================================================ %
+\pagestyle{fancy}% turn on fancyheaders as a package option
+% ============================================================================ %
+\newcommand{\ClearAllHeaders}{%
+    \pagestyle{empty}%
+    \fancypagestyle{firstpagestyle}{\fancyhf{}}%
+}%
+% ============================================================================ %

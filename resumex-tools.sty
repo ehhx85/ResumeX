@@ -1,0 +1,95 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-tools}[%
+    2018/05/29 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+% ============================================================================ %
+%%% File Tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@LoadFile}[2]{%
+    \def\@FilePath{#1/#2}% define path from folder/file format
+    \IfFileExists{\@FilePath}{%
+            \input{\@FilePath}%
+        }{%
+            \typeout{
+                File Load Error: File could not be loaded from path '\@FilePath '%
+            }%
+        }%
+        \let\@FilePath\undefined%
+}%
+% ============================================================================ %
+%%% String Tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@GetSubString}[3]{%
+    \StrLeft{#1}{#3}[\@SubString]%
+    \def\@StringLength{\numexpr(#3-#2+1)\relax}%
+    \StrRight{\@SubString}{\@StringLength}%
+}%
+% ============================================================================ %
+%%% Dimension Tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand*{\pgfmathfromdim}[2]{%
+    \def\@tmpPoints{\number#2}% convert dimension to pt
+    \def\@tmpConversion{28.45274}% pt to cm
+    \pgfmathsetmacro#1{\@tmpPoints/\@tmpConversion}% output in cm
+}%
+% ============================================================================ %
+%%% Variable Tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@NewVariableTool}[2]{%
+    \typeout{**********************}% 
+    \typeout{* Variable Generator *}%
+    \typeout{**********************}%
+    \@VariableTools@Default{#1}{#2}%
+    \@VariableTools@Value{#1}%
+    \@VariableTools@Mutator{#1}%
+    \@VariableTools@Reset{#1}%
+    \@nameuse{@reset@#1}%
+    \typeout{}%
+    \typeout{**********************}%
+}%
+% ============================================================================ %
+\newcommand{\@VariableTools@Default}[2]{%
+    \def\@TMP{@default@#1}%
+    \@ifundefined{\@TMP}%
+        {%
+            \@namedef{\@TMP}{#2}%
+            \typeout{}%
+            \typeout{\@backslashchar\@TMP  = '\@nameuse{\@TMP}'}%
+        }%
+        {%
+            \typeout{... default value has already been defined}%  TODO : UPDATE MESSEGE
+        }%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@VariableTools@Value}[1]{%
+    \def\@TMP{@#1}%
+    \typeout{}%
+    \typeout{\@backslashchar\@TMP = default value}%
+    \@namedef{\@TMP}{\empty}%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@VariableTools@Mutator}[1]{%
+    \def\@TMP{#1}%
+    \typeout{}%
+    \typeout{mutator = \@nameuse{\@TMP}}%
+    \expandafter\newcommand\csname\@TMP\endcsname[1]{\@namedef{@#1}{##1}}%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@VariableTools@Reset}[1]{%
+    \def\@TMP{@reset@#1}%    
+    \typeout{}%
+    \typeout{reset = \@nameuse{\@TMP}}%
+    \@namedef{\@TMP}{\@namedef{@#1}{\@nameuse{@default@#1}}}%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ % 

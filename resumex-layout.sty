@@ -1,0 +1,75 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-layout}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+% ============================================================================ %
+\geometry{%
+    portrait,%    
+    heightrounded,%
+    letterpaper,%
+    paperheight = {11.0in},%
+    paperwidth = {8.5in},%
+    vmargin = {0.50in},%
+    hmargin = {0.75in},%
+    includeheadfoot,%
+    headsep = {12pt},%
+    footskip = {12pt},%
+    headheight = {12pt},%
+}%
+% ============================================================================ %
+%%% Formatting Options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\raggedbottom% fixes the underfull \vbox badness warnings
+% ============================================================================ %
+\newcommand{\@baselinestretch@default}{1.15}%
+\renewcommand{\baselinestretch}{\@baselinestretch@default}%
+% ============================================================================ %
+\newcommand{\@parskip@default}{0em}%
+\setlength{\parskip}{\@parskip@default}%
+% ============================================================================ %
+\def\@SectionHeaderBarSpacing{\dimexpr(\baselineskip)/2\relax}%
+% ============================================================================ %
+\def\@SectionSecondaryLineIndent{\kern 0.75em}%
+% ============================================================================ %
+\def\@SectionBulletSpacing{\dimexpr(\baselineskip)/4\relax}%
+\def\@SectionBulletIndent{0.75em}%
+\def\@SectionBulletWidth{\dimexpr(0.99\textwidth-\@SectionBulletIndent)\relax}%
+% ============================================================================ %
+\def\@HeadingItemSpacing{\kern 0.5em}%
+\def\@HeadingIconSpacing{\kern 0.4em}%
+% ============================================================================ %
+\def\@HeadingTailSpacing{\dimexpr(\baselineskip)*5/4\relax}%
+\def\@SectionTailSpacing{\dimexpr(\baselineskip)*1/2\relax}%
+% ============================================================================ %
+\def\@RuleThickness{0.5pt}%
+% ============================================================================ %
+\def\@PortraitSize{0.90in}%
+% ============================================================================ %
+\def\@SkillsListColumns{4}%
+% ============================================================================ %
+%%% Font Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\renewcommand*{\familydefault}{\sfdefault}% define font style here
+% ============================================================================ %
+\newcommand{\@FontSize@HeadingName}{\huge}%
+\newcommand{\@FontSize@HeadingPosition}{\large}%
+\newcommand{\@FontSize@HeadingContact}{\small}%
+\newcommand{\@FontSize@SectionHeaderBar}{\Large}%
+\newcommand{\@FontSize@SectionMain}{\large}%
+\newcommand{\@FontSize@SectionSecondary}{\normalsize}%
+\newcommand{\@FontSize@SectionBullets}{\small}%
+\newcommand{\@FontSize@SectionSkillsBullets}{\footnotesize}%
+% ============================================================================ %
+%%% Color Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\definecolor{header_color}{gray}{0.75}%
+\definecolor{footer_color}{gray}{0.75}%
+\definecolor{section_alt_color}{gray}{0.75}%
+% ============================================================================ %

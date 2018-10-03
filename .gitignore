@@ -1,0 +1,44 @@
+## General Operating System
+*.DS_Store
+
+## LaTeX Base Files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Output Files
+*.dvi
+*.xdv
+*-converted-to.*
+*.ps
+*.eps
+*.pdf
+
+## Bibliography Files
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Auxiliary Files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## TeX Maker Files and Directories
+**/build
+**/archive

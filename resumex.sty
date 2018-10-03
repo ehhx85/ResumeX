@@ -1,0 +1,39 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+\RequirePackage{resumex-layout}%
+\RequirePackage{resumex-tools}%
+\RequirePackage{resumex-variables}%
+% ============================================================================ %
+\RequirePackage{resumex-name}%
+\RequirePackage{resumex-contact}%
+% ============================================================================ %
+\RequirePackage{resumex-structure}%
+\RequirePackage{resumex-heading}%
+\RequirePackage{resumex-cover}%
+\RequirePackage{resumex-experience}%
+\RequirePackage{resumex-bibliography}%
+% ============================================================================ %
+\addbibresource{resume.bib}%
+% ============================================================================ %
+\RequirePackage{hyperref}%
+% ============================================================================ %
+\hypersetup{%
+    colorlinks = {true},%
+    linkcolor = {black},%
+    filecolor = {black},%
+    urlcolor = {blue},%
+}%
+% ============================================================================ %
+\DeclareOption{FinalDraft}{\ClearAllHeaders\hypersetup{urlcolor = {black}}}%
+% ============================================================================ %
+\ProcessOptions\relax%
+% ============================================================================ %

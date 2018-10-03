@@ -1,0 +1,157 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-name}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+\RequirePackage{resumex-variables}%
+% ============================================================================ %
+%%% Name Components %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@GetInitial}[1]{%
+    \def\@TMP{#1}%
+    \if\relax\@TMP\relax\else{\StrLeft{\@TMP}{1}}\fi%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@GetInitialPeriod}[1]{%
+    \def\@TMP{#1}%
+    \if\relax\@TMP\relax\else{\StrLeft{\@TMP}{1}.}\fi%
+    \let\@TMP\undefined%
+}%
+% ============================================================================ %
+\newcommand{\@GetPrefix}{%
+    \if\relax\@NamePrefix\relax\else{\@NamePrefix\ }\fi%
+}%
+% ============================================================================ %
+\newcommand{\@GetSuffix}{%
+    \if\relax\@NameSuffix\relax\else{,\ \@NameSuffix}\fi%
+}%
+% ============================================================================ %
+%%% First Name %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@name@first@last}{%
+    \@NameFirst\ %
+    \@NameLast%
+}%
+% ============================================================================ %
+\newcommand{\@name@first@mi@last}{%
+    \@NameFirst\ %
+    \if\relax\@NameMiddle\relax\else{\@GetInitialPeriod{\@NameMiddle}\ }\fi%
+    \@NameLast%
+}%
+% ============================================================================ %
+\newcommand{\@name@first@middle@last}{%
+    \@NameFirst\ %
+    \if\relax\@NameMiddle\relax\else{\@NameMiddle\ }\fi%
+    \@NameLast%
+}%
+% ============================================================================ %
+\newcommand{\@name@fi@mi@last}{%
+    \@GetInitialPeriod{\@NameFirst}%
+    \if\relax\@NameMiddle\relax{\ }\else{\@GetInitialPeriod{\@NameMiddle}\ }\fi%
+    \@NameLast%
+}%
+% ============================================================================ %
+\newcommand{\@name@fi@middle@last}{%
+    \@GetInitialPeriod{\@NameFirst}\ %
+    \if\relax\@NameMiddle\relax\else{\@NameMiddle\ }\fi%
+    \@NameLast%
+}%
+% ============================================================================ %
+%%% Initial Name %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\newcommand{\@name@initials}{%
+    \@GetInitial{\@NameFirst}%
+    \@GetInitial{\@NameMiddle}%
+    \@GetInitial{\@NameLast}%
+}%
+% ============================================================================ %
+\newcommand{\@name@initials@period}{%
+    \@GetInitialPeriod{\@NameFirst}%
+    \@GetInitialPeriod{\@NameMiddle}%
+    \@GetInitialPeriod{\@NameLast}%
+}%
+% ============================================================================ %
+%%% Name Builder Selector %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\NewDocumentCommand{\@BuildName}{ O{} }{%
+    \IfStrEqCase{#1}{%
+        % ==================================================================== %
+        {first}{\@NameFirst}%
+        {first-last}{\@name@first@last}%
+        {first-last-suffix}{\@name@first@last\@GetSuffix}%
+        {first-mi-last}{\@name@first@mi@last}%
+        {first-mi-last-suffix}{\@name@first@mi@last\@GetSuffix}%
+        {first-middle-last}{\@name@first@middle@last}%
+        {first-middle-last-suffix}{\@name@first@middle@last\@GetSuffix}%
+        {fi-mi-last}{\@name@fi@mi@last}%
+        {fi-mi-last-suffix}{\@name@fi@mi@last\@GetSuffix}%
+        {fi-middle-last}{\@name@fi@middle@last}%
+        {fi-middle-last-suffix}{\@name@fi@middle@last\@GetSuffix}%
+        % ==================================================================== %
+        {middle}{\@NameMiddle}%
+        {middle-init}{\@GetInitial{\@NameMiddle}}%
+        % ==================================================================== %
+        {last}{\@NameLast}%
+        % ==================================================================== %
+        {prefix-first-last}{\@GetPrefix\@name@first@last}%
+        {prefix-first-last-suffix}{\@GetPrefix\@name@first@last\@GetSuffix}%
+        {prefix-first-mi-last}{\@GetPrefix\@name@first@mi@last}%
+        {prefix-first-mi-last-suffix}{\@GetPrefix\@name@first@mi@last\@GetSuffix}%
+        {prefix-first-middle-last}{\@GetPrefix\@name@first@middle@last}%
+        {prefix-first-middle-last-suffix}{\@GetPrefix\@name@first@middle@last\@GetSuffix}%
+        {prefix-fi-mi-last}{\@GetPrefix\@name@fi@mi@last}%
+        {prefix-fi-mi-last-suffix}{\@GetPrefix\@name@fi@mi@last\@GetSuffix}%
+        {prefix-fi-middle-last}{\@GetPrefix\@name@fi@middle@last}%
+        {prefix-fi-middle-last-suffix}{\@GetPrefix\@name@fi@middle@last\@GetSuffix}%
+        {prefix-last}{\@GetPrefix\@NameLast}%
+        % ==================================================================== %
+        {initials}{\@name@initials}%
+        {initials-period}{\@name@initials@period}%
+        % ==================================================================== %
+    }[***]%
+}%
+% ============================================================================ %
+\newcommand{\BuildNameTest}{%
+    \@LoadFile{info}{identification}%
+    \noindent%
+    % ======================================================================== %
+    first: \@BuildName[first]\\%
+    first-last: \@BuildName[first-last]\\%
+    first-last-suffix: \@BuildName[first-last-suffix]\\%
+    first-mi-last: \@BuildName[first-mi-last]\\%
+    first-mi-last-suffix: \@BuildName[first-mi-last-suffix]\\%
+    first-middle-last: \@BuildName[first-middle-last]\\%
+    first-middle-last-suffix: \@BuildName[first-middle-last-suffix]\\%
+    fi-mi-last: \@BuildName[fi-mi-last]\\%
+    fi-mi-last-suffix: \@BuildName[fi-mi-last-suffix]\\%
+    fi-middle-last: \@BuildName[fi-middle-last]\\%
+    fi-middle-last-suffix: \@BuildName[fi-middle-last-suffix]\\%
+    % ======================================================================== %
+    middle: \@BuildName[middle]\\%
+    middle-init: \@BuildName[middle-init]\\%
+    % ======================================================================== %
+    last: \@BuildName[last]\\%
+    % ======================================================================== %
+    prefix-first-last: \@BuildName[prefix-first-last]\\%
+    prefix-first-last-suffix: \@BuildName[prefix-first-last-suffix]\\%
+    prefix-first-mi-last: \@BuildName[prefix-first-mi-last]\\%
+    prefix-first-mi-last-suffix: \@BuildName[prefix-first-mi-last-suffix]\\%
+    prefix-first-middle-last: \@BuildName[prefix-first-middle-last]\\%
+    prefix-first-middle-last-suffix: \@BuildName[prefix-first-middle-last-suffix]\\%
+    prefix-fi-mi-last: \@BuildName[prefix-fi-mi-last]\\%
+    prefix-fi-mi-last-suffix: \@BuildName[prefix-fi-mi-last-suffix]\\%
+    prefix-fi-middle-last: \@BuildName[prefix-fi-middle-last]\\%
+    prefix-fi-middle-last-suffix: \@BuildName[prefix-fi-middle-last-suffix]\\%
+    prefix-last: \@BuildName[prefix-last]\\%
+    % ======================================================================== %
+    initials: \@BuildName[initials]\\%
+    initials-period: \@BuildName[initials-period]\\%
+}%
+% ============================================================================ %

@@ -1,0 +1,93 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-cover}[%
+    2018/05/29 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-base}%
+% ============================================================================ %
+\newcommand{\@BuildCoverLetterManager}{%
+    \DTMtoday%
+    \par%
+    \@BuildName[first-mi-last-suffix]\\%
+    \@BuildAddress\\%
+    \@GetPhoneNumber\\%
+    \@EmailAddress%
+    \par%
+}%
+% ============================================================================ %
+\newcommand{\@CoverLetterSignOn}{%
+    Dear \@BuildName[prefix-last],%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateCoverLetter}{ O{} }{%
+    \@LoadFile{prospects}{#1}%
+    \begin{quote}%
+        {\large%
+            \setlength{\parskip}{0.75em}%            
+            \vspace*{-\dimexpr(\baselineskip)/2\relax}%
+            \@BuildCoverLetterManager%
+            \@CoverLetterSignOn%
+            \par%
+            \@CoverLetterMaterial%
+            \par%
+            \@CoverLetterSignOff%
+            \par%
+            Sincerely,%
+            \par%
+            \vspace{\dimexpr(\baselineskip)/4\relax}%    
+            \@ResetCoverLetterVariables%
+            \@LoadFile{info}{contact}%
+            \par%
+            \vspace*{-1.15ex}%
+            \raisebox{-1.15ex}{%
+                \includegraphics[height=0.75in, width=1.75in]{./graphics/signature.png}%
+            }%
+            \par%
+            \vspace*{0.5ex}%
+            \@BuildName[first-mi-last]%
+            \@ResetNameVariables%
+            \setlength{\parskip}{\@parskip@default}%            
+        \par}%
+    \end{quote}%
+    \newpage%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateCoverLetterNoHeader}{ O{} }{%
+    \@LoadFile{prospects}{#1}%
+    \begin{quote}%
+        {\large%
+            \setlength{\parskip}{0.75em}%            
+            \vspace*{-\dimexpr(\baselineskip)/2\relax}%
+            \DTMtoday%
+            \par%
+            %
+            Dear Management,\\%          
+            \@CoverLetterMaterial%
+            \par%
+            \@CoverLetterSignOff%
+            \par%
+            Sincerely,%
+            \par%
+            \vspace{\dimexpr(\baselineskip)/4\relax}%    
+            \@ResetCoverLetterVariables%
+            \@LoadFile{info}{contact}%
+            \par%
+            \vspace*{-1.15ex}%
+            \raisebox{-1.15ex}{%
+                \includegraphics[height=0.75in, width=1.75in]{./graphics/signature.png}%
+            }%
+            \par%
+            \vspace*{0.5ex}%
+            \@BuildName[first-mi-last]%
+            \@ResetNameVariables%
+            \setlength{\parskip}{\@parskip@default}%            
+        \par}%
+    \end{quote}%
+    \newpage%
+}%
+% ============================================================================ %

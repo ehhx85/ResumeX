@@ -1,0 +1,30 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-bibliography}[%
+    2018/05/29 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-base}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateBibliographyBlock}{ O{} }{%
+    \@LoadFile{info}{#1}%
+    \begin{refsection}%
+    % ------------------------------------------------------------------------ %
+        \nocite{\@BibliographyList}%
+        \vspace*{-1.0ex}%
+        \renewcommand*{\bibfont}{\footnotesize}%
+        \printbibliography[%
+            heading={none},%
+        ]%        
+    % ------------------------------------------------------------------------ %
+    \end{refsection}%
+    \par%
+    \vspace*{-1.0ex}%
+    \vspace{\@SectionTailSpacing}%
+    \@reset@BibliographyList%
+}%
+% ============================================================================ %

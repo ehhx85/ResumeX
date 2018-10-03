@@ -1,0 +1,152 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-experience}[%
+    2018/05/29 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-base}%
+% ============================================================================ %
+\NewDocumentCommand{\@GetCompanyDepartment}{ o }{%
+    \if\relax\@CompanyDepartment\relax\else{%
+        \IfNoValueTF{#1}{%
+            \@CompanyDepartment%
+        }{%
+            #1\ \@CompanyDepartment%
+        }%
+    }\fi%
+}%
+% ============================================================================ %
+%%% Work Experience %%%
+% ============================================================================ %
+\newcommand{\@BuildWorkLineOne}{%
+    \textbf{\@FontSize@SectionMain%
+        \@JobTitle%
+    }%
+    \hfill%
+    \textbf{\@FontSize@SectionSecondary%
+        \@BuildItemDate{\@JobStartMonth}{\@JobStartYear}%
+        \ \--\ %
+        \@BuildItemDate{\@JobEndMonth}{\@JobEndYear}%
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@BuildWorkLineTwo}{%
+    \textit{\@FontSize@SectionSecondary%    
+        \@SectionSecondaryLineIndent%
+        \@CompanyName%
+        \if\relax\@CompanyDepartment\relax\else{,\ \@CompanyDepartment}\fi%
+        \ \--\ %
+        \@CompanyCity ,\ %
+        \MakeUppercase{\@CompanyState}%
+    }%
+}%
+% ============================================================================ %
+%%% Education Experience %%%
+% ============================================================================ %
+\newcommand{\@BuildEducationLineOne}{%
+    \textbf{\@FontSize@SectionMain%
+        \@EducationType\ %
+        \@EducationField,\ %
+    }%
+    {\@FontSize@SectionSecondary%    
+        \textit{%
+            \@EducationInstitution%        
+            \ \--\ %
+            \@EducationCity ,\ %
+            \@EducationState%
+        }%
+        \hfill%
+        \textbf{%
+            \@BuildItemDate{\@EducationMonth}{\@EducationYear}%
+        }%
+    }%
+}%
+% ============================================================================ %
+%%% Teaching Experience %%%
+% ============================================================================ %
+\newcommand{\@BuildTeachingLineOne}{%
+    \textbf{\@FontSize@SectionMain%
+        \@CourseName%
+    }%
+    {\@FontSize@SectionMain ,\ \@CoursePosition}%
+    \hfill%
+    \textbf{\@FontSize@SectionSecondary%
+        \@BuildItemSemester{\@CourseStartSemester}{\@CourseStartYear}%
+        \if\relax\@CourseEndSemester\relax\else{%
+            \ \--\ %
+            \@BuildItemSemester{\@CourseEndSemester}{\@CourseEndYear}%
+        }%
+        \fi%
+    }%
+}%
+% ============================================================================ %
+\newcommand{\@BuildTeachingLineTwo}{%
+    \textit{\@FontSize@SectionSecondary%    
+        \@SectionSecondaryLineIndent%
+        \@CompanyName%
+        \ \--\ %
+        \@CompanyCity ,\ %
+        \MakeUppercase{\@CompanyState}%
+    \hfill%
+    {\small(\@CourseNumber)}%
+    }%
+}%
+% ============================================================================ %
+%%% Training Experience %%%
+% ============================================================================ %
+% ============================================================================ %
+%%% Generators %%%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateSummaryBlock}{ O{summary} }{%
+    \noindent%
+    \hspace*{\fill}%
+    \begin{minipage}[c]{0.975\textwidth}%
+        \begin{center}%
+            \@LoadFile{info}{#1}%
+        \end{center}%
+    \end{minipage}%
+    \hspace*{\fill}%
+    \par%
+    \vspace{\@SectionTailSpacing}%
+}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateExperienceBlock}{ O{} O{} o  }{%
+    \@LoadFile{experience}{#2}%
+    \@LoadFile{info}{#2}%
+    \noindent%
+    \begin{minipage}[c]{\textwidth}%
+    % ------------------------------------------------------------------------ %
+        \IfStrEqCase{#1}{%
+            {education}{\@BuildEducationLineOne}%            
+            {teaching}{\@BuildTeachingLineOne\par\@BuildTeachingLineTwo}%
+            {training}{}%
+            {work}{\@BuildWorkLineOne\par\@BuildWorkLineTwo}%
+        }[]%
+        \par%
+        \IfNoValueTF{#3}{%
+            \@BuildBulletList%
+        }{}%
+    % ------------------------------------------------------------------------ %
+    \end{minipage}%
+    \par%
+    \vspace{\@SectionTailSpacing}%
+    % ------------------------------------------------------------------------ %
+    \@ResetBulletListVariables%
+    \@ResetEducationVariables%
+    \@ResetExperienceVariables%
+    \@ResetTeachingVariables
+}%
+% ============================================================================ %
+\NewDocumentCommand{\GenerateSkillsBlock}{ O{} }{%
+    \@LoadFile{info}{#1}%
+    \noindent%
+    \@BuildBulletColumns[\@SkillsListColumns][$\diamond$]%
+    \par%
+    \vspace{\@SectionTailSpacing}%
+    \@ResetBulletListVariables%
+}%
+% ============================================================================ %

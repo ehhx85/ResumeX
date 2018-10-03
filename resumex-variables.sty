@@ -1,0 +1,197 @@
+% ============================================================================ %
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{resumex-variables}[%
+    2018/05/27 - %
+    Resume and Curriculum Vitae Builder %
+    v1.0 - %
+    LaTeX Custom Package %
+    by Elan H. Herrera%
+]%
+% ============================================================================ %
+\RequirePackage{resumex-packages}%
+\RequirePackage{resumex-tools}%
+% ============================================================================ %
+%%% Name Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% ============================================================================ %
+\@NewVariableTool{NamePrefix}{}%
+\@NewVariableTool{NameFirst}{First}%
+\@NewVariableTool{NameMiddle}{Middle}%
+\@NewVariableTool{NameLast}{Last}%
+\@NewVariableTool{NameSuffix}{}%
+% ============================================================================ %
+\newcommand{\@ResetNameVariables}{%
+    \@reset@NamePrefix%
+    \@reset@NameFirst%
+    \@reset@NameMiddle%
+    \@reset@NameLast%
+    \@reset@NameSuffix%
+}%
+% ============================================================================ %
+%%% Contact Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{PhoneNumber}{000-000-000}%
+\@NewVariableTool{EmailAddress}{first.last@domain.com}%
+\@NewVariableTool{LinkedInUserName}{UserName}%
+\@NewVariableTool{LinkedInLink}{www.linkedin.com}%
+\@NewVariableTool{GitHubUserName}{UserName}%
+\@NewVariableTool{GitHubLink}{www.github.com}%
+% ============================================================================ %
+\newcommand{\@ResetContactVariables}{%
+    \@reset@PhoneNumber%
+    \@reset@EmailAddress%
+}%
+% ============================================================================ %
+%%% Address Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{AddressNumber}{000}%
+\@NewVariableTool{AddressStreet}{STREET}%
+\@NewVariableTool{AddressSuiteType}{\#}%
+\@NewVariableTool{AddressSuiteNumber}{00}%
+\@NewVariableTool{AddressCity}{CITY}%
+\@NewVariableTool{AddressState}{STATE}%
+\@NewVariableTool{AddressZipCode}{00000}%
+\@NewVariableTool{AddressRelocation}{no}%
+% ============================================================================ %
+\newcommand{\@ResetAddressVariables}{%
+    \@reset@AddressNumber%
+    \@reset@AddressStreet%
+    \@reset@AddressSuiteType%
+    \@reset@AddressSuiteNumber%
+    \@reset@AddressCity%
+    \@reset@AddressState%
+    \@reset@AddressZipCode%
+    \@reset@AddressRelocation%
+}%
+% ============================================================================ %
+%%% Cover Page Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{Objective}{Seeking employment.}%
+\@NewVariableTool{CoverLetterMaterial}{I would like to elaborate on why I am qualified for the employment opportunity.}%
+\@NewVariableTool{CoverLetterSignOff}{Please find my attached resume and I look forward to speaking with you regarding this opportunity.}%
+% ============================================================================ %
+\newcommand{\@ResetCoverLetterVariables}{%
+    \@reset@Objective%
+    \@reset@CoverLetterMaterial%
+    \@reset@CoverLetterSignOff%
+}%
+% ============================================================================ %
+%%% Employment Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{CompanyName}{Template Company}%
+\@NewVariableTool{CompanyDepartment}{Department or Division}%
+\@NewVariableTool{CompanyCity}{City}%
+\@NewVariableTool{CompanyState}{State}%
+\@NewVariableTool{JobTitle}{Job Title or Position}%
+\@NewVariableTool{JobStartDay}{01}%
+\@NewVariableTool{JobStartMonth}{01}%
+\@NewVariableTool{JobStartYear}{1900}%
+\@NewVariableTool{JobEndDay}{01}%
+\@NewVariableTool{JobEndMonth}{12}%
+\@NewVariableTool{JobEndYear}{1900}%
+\@NewVariableTool{JobStartHourly}{0.99}%
+\@NewVariableTool{JobStartSalary}{10,000}%
+\@NewVariableTool{JobEndHourly}{0.99}%
+\@NewVariableTool{JobEndSalary}{10,000}%
+% ============================================================================ %
+\newcommand{\@ResetExperienceVariables}{%
+    \@reset@CompanyName%
+    \@reset@CompanyDepartment%
+    \@reset@CompanyCity%
+    \@reset@CompanyState%
+    \@reset@JobTitle%
+    \@reset@JobStartDay%
+    \@reset@JobStartMonth%
+    \@reset@JobStartYear%
+    \@reset@JobEndDay%
+    \@reset@JobEndMonth%
+    \@reset@JobEndYear%
+    \@reset@JobStartHourly%
+    \@reset@JobStartSalary%
+    \@reset@JobEndHourly%
+    \@reset@JobEndSalary%
+}%
+% ============================================================================ %
+%%% Teaching Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{CoursePosition}{Teaching Position}%
+\@NewVariableTool{CourseName}{Course Name}%
+\@NewVariableTool{CourseNumber}{ABC 123}%
+\@NewVariableTool{CourseStartSemester}{1}%
+\@NewVariableTool{CourseStartYear}{1900}%
+\@NewVariableTool{CourseEndSemester}{3}%
+\@NewVariableTool{CourseEndYear}{1900}%
+% ============================================================================ %
+\newcommand{\@ResetTeachingVariables}{%
+    \@reset@CoursePosition%
+    \@reset@CourseName%
+    \@reset@CourseNumber%
+    \@reset@CourseStartSemester%
+    \@reset@CourseStartYear%
+    \@reset@CourseEndSemester%
+    \@reset@CourseEndYear%
+}%
+% ============================================================================ %
+%%% Education Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{EducationType}{A.B.C.}%
+\@NewVariableTool{EducationField}{Degree Field}%
+\@NewVariableTool{EducationGPA}{3.00}%
+\@NewVariableTool{EducationYear}{2000}%
+\@NewVariableTool{EducationMonth}{01}%
+\@NewVariableTool{EducationInstitution}{Institution}%
+\@NewVariableTool{EducationCity}{City}%
+\@NewVariableTool{EducationState}{State}%
+% ============================================================================ %
+\newcommand{\@ResetEducationVariables}{%
+    \@reset@EducationType%
+    \@reset@EducationField%
+    \@reset@EducationGPA%
+    \@reset@EducationYear%
+    \@reset@EducationMonth%
+    \@reset@EducationInstitution%
+    \@reset@EducationCity%
+    \@reset@EducationState%
+}%
+% ============================================================================ %
+%%% Bullet List Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{BulletOne}{}%
+\@NewVariableTool{BulletTwo}{}%
+\@NewVariableTool{BulletThree}{}%
+\@NewVariableTool{BulletFour}{}%
+\@NewVariableTool{BulletFive}{}%
+%\@NewVariableTool{BulletSix}{}%
+%\@NewVariableTool{BulletSeven}{}%
+%\@NewVariableTool{BulletEight}{}%
+%\@NewVariableTool{BulletNine}{}%
+%\@NewVariableTool{BulletTen}{}%
+%\@NewVariableTool{BulletEleven}{}%
+%\@NewVariableTool{BulletTwelve}{}%
+%\@NewVariableTool{BulletThirteen}{}%
+%\@NewVariableTool{BulletFourteen}{}%
+%\@NewVariableTool{BulletFifteen}{}%
+\@NewVariableTool{BulletList}{}%
+% ============================================================================ %
+\newcommand{\@ResetBulletListVariables}{%
+    \@reset@BulletOne%
+    \@reset@BulletTwo%
+    \@reset@BulletThree%
+    \@reset@BulletFour%
+    \@reset@BulletFive%
+    %\@reset@BulletSix%
+    %\@reset@BulletSeven%
+    %\@reset@BulletEight%
+    %\@reset@BulletNine%
+    %\@reset@BulletTen%
+    %\@reset@BulletEleven%
+    %\@reset@BulletTwelve%
+    %\@reset@BulletThirteen%
+    %\@reset@BulletFourteen%
+    %\@reset@BulletFifteen%
+    \@reset@BulletList%
+}%
+% ============================================================================ %
+%%% Bibliography Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================================================ %
+\@NewVariableTool{BibliographyList}{}%
+% ============================================================================ %
